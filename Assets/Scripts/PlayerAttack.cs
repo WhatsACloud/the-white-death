@@ -1,5 +1,7 @@
 using UnityEngine;
 using TMPro; // Required for TextMeshPro
+using System.Collections;
+using UnityEngine.SceneManagement; // Required for scene management
 
 public class PlayerAttack : MonoBehaviour
 {
@@ -7,6 +9,8 @@ public class PlayerAttack : MonoBehaviour
     public float minSwipeDistance = 5f;  // Minimum swipe distance in pixels
     public int maxHealth = 10;           // Maximum health of the player
     public int damage = 50;
+    public float invincibilityDuration = 2f; // Duration of invincibility
+    public float flashInterval = 0.1f;  // Interval for flashing effect
 
     private int currentHealth;           // Player's current health
     public TextMeshProUGUI healthTextTMP; // Reference to the TMP Text element
@@ -14,9 +18,11 @@ public class PlayerAttack : MonoBehaviour
     private Vector2 swipeStart;          // Start position of swipe
     private bool isDashing = false;      // Shared flag with PlayerController
     private bool canDash = true;         // Prevents continuous dashing
+    private bool isInvincible = false;   // Tracks invincibility state
     private Vector2 dashDirection;       // Direction of the dash
     private float dashTimer;             // Timer to track dash duration
     private Rigidbody2D rb;              // Reference to Rigidbody2D
+    private SpriteRenderer spriteRenderer; // For flashing effect
 
     private PlayerController playerController; // Reference to PlayerController
 
@@ -24,6 +30,7 @@ public class PlayerAttack : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         playerController = GetComponent<PlayerController>(); // Access PlayerController
+        spriteRenderer = GetComponent<SpriteRenderer>(); // For visual flashing
         currentHealth = maxHealth; // Initialize health
         UpdateHealthUI(); // Update health UI at the start
     }
@@ -57,11 +64,27 @@ public class PlayerAttack : MonoBehaviour
             EnemyHealth enemyHealth = collision.collider.GetComponent<EnemyHealth>();
             if (enemyHealth != null)
             {
-                enemyHealth.TakeDamage(damage); // Call TakeDamage with damage value (e.g., 10)
+                enemyHealth.TakeDamage(damage); // Call TakeDamage with damage value
             }
+        }
+
+        // Handle collisions with projectiles or enemies outside of a dash
+        if (!isDashing && !isInvincible && collision.collider.CompareTag("EnemyProjectile"))
+        {
+            TakeDamage(1); // Example: Take 1 damage from projectiles
         }
     }
 
+    private void Die()
+    {
+        Debug.Log("Player has died!");
+        RestartLevel(); // Restart the level on death
+    }
+
+    private void RestartLevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name); // Reload current scene
+    }
 
     void DetectSwipe()
     {
@@ -83,7 +106,7 @@ public class PlayerAttack : MonoBehaviour
         canDash = false; // Disable dashing until mouse is released
         playerController.isDashing = true; // Notify PlayerController
         dashTimer = dashDuration;
-        FindFirstObjectByType<FlowManager>().ConsumeFlowForDash();
+        FlowManager.instance.ConsumeFlowForDash();
 
         // Set linearVelocity in the dash direction
         rb.linearVelocity = dashDirection * playerController.slashRange;
@@ -107,6 +130,8 @@ public class PlayerAttack : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
+        if (isInvincible) return; // Ignore damage if invincible
+
         currentHealth -= damage; // Reduce health
         UpdateHealthUI(); // Update health display
         Debug.Log("Player Health: " + currentHealth);
@@ -115,12 +140,28 @@ public class PlayerAttack : MonoBehaviour
         {
             Die(); // Handle player death
         }
+        else
+        {
+            StartCoroutine(ActivateInvincibility());
+        }
     }
 
-    private void Die()
+    private IEnumerator ActivateInvincibility()
     {
-        Debug.Log("Player has died!");
-        // Add logic for death, e.g., restarting the level
+        isInvincible = true;
+        float timer = 0f;
+
+        while (timer < invincibilityDuration)
+        {
+            // Toggle sprite visibility for flashing effect
+            spriteRenderer.enabled = !spriteRenderer.enabled;
+            yield return new WaitForSeconds(flashInterval);
+            timer += flashInterval;
+        }
+
+        // Ensure the sprite is visible after flashing
+        spriteRenderer.enabled = true;
+        isInvincible = false;
     }
 
     private void UpdateHealthUI()
