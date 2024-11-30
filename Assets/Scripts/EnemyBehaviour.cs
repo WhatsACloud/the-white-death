@@ -6,12 +6,14 @@ public class Enemy : MonoBehaviour
     public Transform firePoint;           // Point where projectiles spawn
     public float fireInterval = 2f;       // Time between shots
 
-    private Transform player;             // Reference to the player
+    private Transform playerPos;          // Reference to the player (the location)
+    private GameObject player;            // Reference to player (object)
     private float fireTimer;              // Timer to track when to shoot
 
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player").transform; // Find the player
+        player = GameObject.FindGameObjectWithTag("Player");
+        playerPos = player.transform; // Find the player
     }
 
     void Update()
@@ -29,11 +31,16 @@ public class Enemy : MonoBehaviour
     {
         if (player != null)
         {
+            // if (gameObject.GetComponent<Collider>() == null){
+            //     gameObject.AddComponent<BoxCollider2D>();
+            // }
             // Instantiate projectile
             GameObject projectile = Instantiate(projectilePrefab, firePoint.position, Quaternion.identity);
 
-            // Calculate direction to the player
-            Vector2 direction = player.position - firePoint.position;
+            // projectile.AddComponent<BoxCollider2D>();
+            // Physics2D.IgnoreCollision(projectile.GetComponent<Collider2D>(), gameObject.GetComponent<Collider2D>(),true);
+            // projectile.GetComponent<Collider2D>().enabled = false;
+            Vector2 direction = playerPos.position - firePoint.position;
 
             // Set projectile direction
             Projectile projectileScript = projectile.GetComponent<Projectile>();

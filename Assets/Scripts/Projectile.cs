@@ -10,7 +10,15 @@ public class Projectile : MonoBehaviour
 
     void Start()
     {
+        Rigidbody2D rb = gameObject.GetComponent<Rigidbody2D>();
+        if (rb == null)
+        {
+            rb = gameObject.AddComponent<Rigidbody2D>();
+            rb.isKinematic = true; 
+        }
         Destroy(gameObject, lifespan); // Auto-destroy after lifespan
+        // gameObject.GetComponent<Collider2D>().enabled = false;
+        gameObject.GetComponent<Collider2D>().isTrigger = true;
     }
 
     void Update()
@@ -24,11 +32,11 @@ public class Projectile : MonoBehaviour
         direction = newDirection.normalized; // Ensure the direction is normalized
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.collider.CompareTag("Player"))
+        if (collision.CompareTag("Player"))
         {
-            PlayerAttack player = collision.collider.GetComponent<PlayerAttack>();
+            PlayerAttack player = collision.GetComponent<PlayerAttack>();
             if (player != null && player.IsDashing())
             {
                 Destroy(gameObject); // Destroy projectile if player is dashing
@@ -40,7 +48,7 @@ public class Projectile : MonoBehaviour
                 Destroy(gameObject);
             }
         }
-        else if (collision.collider.CompareTag("Environment"))
+        else if (collision.CompareTag("Environment"))
         {
             Destroy(gameObject); // Destroy on hitting walls or other obstacles
         }
