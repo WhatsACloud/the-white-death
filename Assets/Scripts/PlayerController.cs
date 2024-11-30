@@ -3,17 +3,30 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public float moveSpeed = 5f;  // Speed of the player
+    public float baseMoveSpeed = 5f;  // Default movement speed
+    public float baseSlashRange = 2f; // Default slash range
+    public float slashRange;         // Current slash range
+
     private Rigidbody2D rb;       // Rigidbody for physics movement
     private Vector2 movement;     // Direction of movement
     public bool isDashing = false; // Shared flag with PlayerAttack
     public bool isMoving = false;  // Flag for WASD movement
 
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        moveSpeed = baseMoveSpeed;
+        slashRange = baseSlashRange;
     }
 
-    void Update()
+    public void SetStats(float speedMultiplier, float rangeMultiplier)
+    {
+        moveSpeed = baseMoveSpeed * speedMultiplier;
+        slashRange = baseSlashRange * rangeMultiplier;
+    }
+
+    void FixedUpdate()
     {
         // Check input for WASD movement only if not dashing
         if (!isDashing)
@@ -24,11 +37,6 @@ public class PlayerController : MonoBehaviour
             movement = new Vector2(moveX, moveY).normalized;
             isMoving = movement.magnitude > 0; // Check if there's movement
         }
-    }
-
-    void FixedUpdate()
-    {
-        // Only apply velocity if the player is moving and not dashing
         if (!isDashing)
         {
             if (isMoving)

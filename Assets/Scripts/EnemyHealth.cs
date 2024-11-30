@@ -10,6 +10,7 @@ public class EnemyHealth : MonoBehaviour
 
         if (health <= 0)
         {
+            FindFirstObjectByType<FlowManager>().GainFlow(25);
             Destroy(gameObject); // Remove enemy when health drops to 0
         }
     }

@@ -1,10 +1,15 @@
 using UnityEngine;
+using TMPro; // Required for TextMeshPro
 
 public class PlayerAttack : MonoBehaviour
 {
-    public float dashSpeed = 10f;         // Speed of the dash
     public float dashDuration = 0.2f;    // Duration of the dash
     public float minSwipeDistance = 5f;  // Minimum swipe distance in pixels
+    public int maxHealth = 10;           // Maximum health of the player
+    public int damage = 50;
+
+    private int currentHealth;           // Player's current health
+    public TextMeshProUGUI healthTextTMP; // Reference to the TMP Text element
 
     private Vector2 swipeStart;          // Start position of swipe
     private bool isDashing = false;      // Shared flag with PlayerController
@@ -19,6 +24,8 @@ public class PlayerAttack : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         playerController = GetComponent<PlayerController>(); // Access PlayerController
+        currentHealth = maxHealth; // Initialize health
+        UpdateHealthUI(); // Update health UI at the start
     }
 
     void Update()
@@ -41,12 +48,27 @@ public class PlayerAttack : MonoBehaviour
         }
     }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        // Check if the player collides with an enemy during a dash
+        if (isDashing && collision.collider.CompareTag("Enemy"))
+        {
+            // Get the EnemyHealth component
+            EnemyHealth enemyHealth = collision.collider.GetComponent<EnemyHealth>();
+            if (enemyHealth != null)
+            {
+                enemyHealth.TakeDamage(damage); // Call TakeDamage with damage value (e.g., 10)
+            }
+        }
+    }
+
+
     void DetectSwipe()
     {
         Vector2 swipeEnd = Input.mousePosition; // Use current mouse position
         float swipeDistance = Vector2.Distance(swipeStart, swipeEnd); // Calculate distance
 
-        if (swipeDistance >= minSwipeDistance)
+        if (swipeDistance >= minSwipeDistance && FlowManager.instance.CanDash())
         {
             // Calculate swipe direction and initiate dash
             Vector2 swipeVector = (swipeEnd - swipeStart).normalized;
@@ -61,9 +83,10 @@ public class PlayerAttack : MonoBehaviour
         canDash = false; // Disable dashing until mouse is released
         playerController.isDashing = true; // Notify PlayerController
         dashTimer = dashDuration;
+        FindFirstObjectByType<FlowManager>().ConsumeFlowForDash();
 
         // Set linearVelocity in the dash direction
-        rb.linearVelocity = dashDirection * dashSpeed;
+        rb.linearVelocity = dashDirection * playerController.slashRange;
     }
 
     void FixedUpdate()
@@ -82,13 +105,32 @@ public class PlayerAttack : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    public void TakeDamage(int damage)
     {
-        // Check if the player collides with an enemy during a dash
-        if (isDashing && collision.collider.CompareTag("Enemy"))
+        currentHealth -= damage; // Reduce health
+        UpdateHealthUI(); // Update health display
+        Debug.Log("Player Health: " + currentHealth);
+
+        if (currentHealth <= 0)
         {
-            Destroy(collision.gameObject); // Destroy the enemy
+            Die(); // Handle player death
         }
+    }
+
+    private void Die()
+    {
+        Debug.Log("Player has died!");
+        // Add logic for death, e.g., restarting the level
+    }
+
+    private void UpdateHealthUI()
+    {
+        healthTextTMP.text = "Health: " + currentHealth; // Update the TMP health text
+    }
+
+    public bool IsDashing()
+    {
+        return isDashing; // Return the current dashing state
     }
 }
 
