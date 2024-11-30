@@ -103,11 +103,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db1c385019223f548a48f42ec96f5080, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dashSpeed: 10
   dashDuration: 0.2
   minSwipeDistance: 5
   maxHealth: 10
   damage: 50
+  invincibilityDuration: 2
+  flashInterval: 0.1
   healthTextTMP: {fileID: 0}
 --- !u!114 &1356217043355928952
 MonoBehaviour:
@@ -122,6 +123,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
+  baseMoveSpeed: 5
+  baseSlashRange: 2
+  slashRange: 0
   isDashing: 0
   isMoving: 0
 --- !u!50 &3056651867684341819
