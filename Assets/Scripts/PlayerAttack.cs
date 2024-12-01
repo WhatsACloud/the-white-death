@@ -95,6 +95,15 @@ public class PlayerAttack : MonoBehaviour
             }
         }
 
+        if (collision.collider.CompareTag("Environment"))
+        {
+            // Move the player slightly out of the wall
+            Vector2 collisionNormal = collision.contacts[0].normal;
+            transform.position += (Vector3)(collisionNormal * 0.1f); // Adjust 0.1f as needed
+            rb.linearVelocity = Vector2.zero; // Stop the dash
+            isDashing = false;
+        }
+
         // Handle collisions with projectiles or enemies outside of a dash
         if (!isInvincible && collision.collider.CompareTag("EnemyProjectile"))
         {
