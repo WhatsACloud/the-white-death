@@ -9,12 +9,12 @@ public class FlowBarUI : MonoBehaviour
     void Start()
     {
         flowManager = FindFirstObjectByType<FlowManager>();
-        flowSlider.maxValue = flowManager.maxFlow;
+        //flowSlider.maxValue = flowManager.maxFlow;
     }
 
     void Update()
     {
-        flowSlider.value = flowManager.currentFlow;
+        //flowSlider.value = flowManager.currentFlow;
     }
 }
 

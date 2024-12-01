@@ -18,14 +18,15 @@ public class FlowManager : MonoBehaviour
     public FlowLevel[] flowLevels; // Configure this in the Inspector
 
     [Header("Flow Settings")]
-    public int maxFlow = 100;         // Maximum flow value
+    public int maxFlow = 300;         // Maximum flow value
     public int currentFlow = 0;      // Current flow value
     public int flowPerKill = 25;     // Flow gained per enemy kill
     public int dashCost = 10;        // Flow cost for dashing
     public float decayRate = 1f;     // Flow decay rate per second
 
     [Header("UI References")]
-    public Image flowBar;             // Reference to the Flow Bar UI
+    public Slider flowSlider;
+    public Image flowBarFill;
     public TextMeshProUGUI flowLevelText; // Reference to the Flow Level text
 
     private int currentFlowState = 0; // Index of the current flow level
@@ -69,15 +70,6 @@ public class FlowManager : MonoBehaviour
         if (currentFlow > maxFlow) currentFlow = maxFlow;
     }
 
-    public void ConsumeFlowForDash()
-    {
-        // Deduct flow for dashing
-        if (currentFlow >= dashCost)
-        {
-            currentFlow -= dashCost;
-        }
-    }
-
     private void UpdateFlowState()
     {
         int newState = 0;
@@ -108,28 +100,28 @@ public class FlowManager : MonoBehaviour
                 player.SetStats(1f, 1f); // Default speed and slash range
                 break;
             case 1: // FOCUSED
-                player.SetStats(1.2f, 1.1f);
+                player.SetStats(2f, 2f);
                 break;
             case 2: // INTENSE
-                player.SetStats(1.5f, 1.25f);
+                player.SetStats(1.5f, 4f);
                 break;
             case 3: // OVERDRIVE
-                player.SetStats(2f, 1.5f);
+                player.SetStats(2f, 8f);
                 break;
         }
-
-        Debug.Log("Current Flow Level: " + flowLevels[currentFlowState].levelName);
+        MusicManager.instance.ChangeMusicForFlowState(currentFlowState);
     }
 
     private void UpdateFlowUI()
     {
+        float actualFlow = (float)currentFlow - flowLevels[currentFlowState].flowThreshold;
         // Update the fill amount of the Flow Bar
-        if (flowBar != null)
+        if (flowSlider != null)
         {
-            flowBar.fillAmount = (float)currentFlow / maxFlow;
+            flowSlider.value = actualFlow;
 
             // Change the bar's color to match the current flow level
-            flowBar.color = flowLevels[currentFlowState].levelColor;
+            flowBarFill.color = flowLevels[currentFlowState].levelColor;
         }
 
         // Update the level text to display the current flow level name

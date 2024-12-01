@@ -5,9 +5,9 @@ using UnityEngine.SceneManagement; // Required for scene management
 
 public class PlayerAttack : MonoBehaviour
 {
-    public float dashDuration = 0.2f;    // Duration of the dash
-    public float minSwipeDistance = 5f;  // Minimum swipe distance in pixels
-    public int maxHealth = 10;           // Maximum health of the player
+    public float dashDeceleration = 5f; // Deceleration rate during the dash
+    public float minSwipeDistance = 5f; // Minimum swipe distance in pixels
+    public int maxHealth = 10;          // Maximum health of the player
     public int damage = 50;
     public float invincibilityDuration = 2f; // Duration of invincibility
     public float flashInterval = 0.1f;  // Interval for flashing effect
@@ -16,11 +16,10 @@ public class PlayerAttack : MonoBehaviour
     public TextMeshProUGUI healthTextTMP; // Reference to the TMP Text element
 
     private Vector2 swipeStart;          // Start position of swipe
-    private bool isDashing = false;      // Shared flag with PlayerController
+    private bool isDashing = false;      // Tracks dashing state
     private bool canDash = true;         // Prevents continuous dashing
     private bool isInvincible = false;   // Tracks invincibility state
     private Vector2 dashDirection;       // Direction of the dash
-    private float dashTimer;             // Timer to track dash duration
     private Rigidbody2D rb;              // Reference to Rigidbody2D
     private SpriteRenderer spriteRenderer; // For flashing effect
 
@@ -38,12 +37,12 @@ public class PlayerAttack : MonoBehaviour
     void Update()
     {
         // Detect swipe and initiate dash
-        if (Input.GetMouseButtonDown(0) && canDash && !isDashing)
+        if (Input.GetMouseButtonDown(0) && canDash)
         {
             swipeStart = Input.mousePosition; // Record start position of swipe
         }
 
-        if (Input.GetMouseButton(0) && canDash && !isDashing)
+        if (Input.GetMouseButton(0) && canDash)
         {
             DetectSwipe();
         }
@@ -58,7 +57,7 @@ public class PlayerAttack : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         // Check if the player collides with an enemy during a dash
-        if (isDashing && collision.collider.CompareTag("Enemy"))
+        if (collision.collider.CompareTag("Enemy"))
         {
             // Get the EnemyHealth component
             EnemyHealth enemyHealth = collision.collider.GetComponent<EnemyHealth>();
@@ -69,7 +68,7 @@ public class PlayerAttack : MonoBehaviour
         }
 
         // Handle collisions with projectiles or enemies outside of a dash
-        if (!isDashing && !isInvincible && collision.collider.CompareTag("EnemyProjectile"))
+        if (!isInvincible && collision.collider.CompareTag("EnemyProjectile"))
         {
             TakeDamage(1); // Example: Take 1 damage from projectiles
         }
@@ -103,27 +102,24 @@ public class PlayerAttack : MonoBehaviour
     void StartDash()
     {
         isDashing = true;
-        canDash = false; // Disable dashing until mouse is released
-        playerController.isDashing = true; // Notify PlayerController
-        dashTimer = dashDuration;
-        FlowManager.instance.ConsumeFlowForDash();
-
-        // Set linearVelocity in the dash direction
-        rb.linearVelocity = dashDirection * playerController.slashRange;
+        canDash = false; // Disable dashing until the current input is processed
+        rb.linearVelocity = dashDirection * playerController.slashRange; // Set initial velocity
     }
 
     void FixedUpdate()
     {
-        // Handle dash timer and stop dashing after duration
+        // Handle deceleration during dashing
         if (isDashing)
         {
-            dashTimer -= Time.fixedDeltaTime;
-
-            if (dashTimer <= 0)
+            if (rb.linearVelocity.magnitude > 0.1f)
             {
-                isDashing = false;
-                playerController.isDashing = false; // Notify PlayerController
-                rb.linearVelocity = Vector2.zero; // Reset linearVelocity after dash
+                // Gradually reduce velocity
+                rb.linearVelocity = Vector2.Lerp(rb.linearVelocity, Vector2.zero, dashDeceleration * Time.fixedDeltaTime);
+            }
+            else
+            {
+                isDashing = false; // End the dash when velocity is very low
+                rb.linearVelocity = Vector2.zero; // Ensure velocity is completely stopped
             }
         }
     }
@@ -142,21 +138,28 @@ public class PlayerAttack : MonoBehaviour
         }
         else
         {
-            StartCoroutine(ActivateInvincibility());
+            StartCoroutine(ActivateInvincibility(true, invincibilityDuration));
         }
     }
 
-    private IEnumerator ActivateInvincibility()
+    private IEnumerator ActivateInvincibility(bool flash, float invincibilityTime)
     {
         isInvincible = true;
         float timer = 0f;
 
-        while (timer < invincibilityDuration)
+        if (flash)
         {
-            // Toggle sprite visibility for flashing effect
-            spriteRenderer.enabled = !spriteRenderer.enabled;
-            yield return new WaitForSeconds(flashInterval);
-            timer += flashInterval;
+            while (timer < invincibilityTime)
+            {
+                // Toggle sprite visibility for flashing effect
+                spriteRenderer.enabled = !spriteRenderer.enabled;
+                yield return new WaitForSeconds(flashInterval);
+                timer += flashInterval;
+            }
+        }
+        else
+        {
+            yield return new WaitForSeconds(invincibilityTime);
         }
 
         // Ensure the sprite is visible after flashing
