@@ -37,13 +37,8 @@ public class Projectile : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             PlayerAttack player = collision.GetComponent<PlayerAttack>();
-            if (player != null && player.IsDashing())
+            if (player != null)
             {
-                Destroy(gameObject); // Destroy projectile if player is dashing
-            }
-            else
-            {
-                // Handle damage or other logic when player is hit and not dashing
                 player.TakeDamage(dmgAmt);
                 Destroy(gameObject);
             }
