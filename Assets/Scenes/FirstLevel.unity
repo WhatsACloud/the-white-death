@@ -14972,7 +14972,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1356217043355928952, guid: e0f0239a2d03c7b48bd801ca212424d5, type: 3}
       propertyPath: baseSlashRange
-      value: 80
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 2547581809896578072, guid: e0f0239a2d03c7b48bd801ca212424d5, type: 3}
       propertyPath: m_Name
@@ -15012,7 +15012,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3321868693771220513, guid: e0f0239a2d03c7b48bd801ca212424d5, type: 3}
       propertyPath: minSwipeDistance
-      value: 100
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 3329307374438321899, guid: e0f0239a2d03c7b48bd801ca212424d5, type: 3}
       propertyPath: m_LocalScale.x

@@ -37,22 +37,18 @@ public class PlayerAttack : MonoBehaviour
 
     void Update()
     {
-        // Detect swipe and initiate dash
+        // Detect swipe start position
         if (Input.GetMouseButtonDown(0) && canDash)
         {
             swipeStart = Input.mousePosition; // Record start position of swipe
         }
 
-        if (Input.GetMouseButton(0) && canDash)
+        // Execute dash on mouse release
+        if (Input.GetMouseButtonUp(0) && canDash)
         {
             DetectSwipe();
-        }
-
-        // Reset canDash when the mouse button is released
-        if (Input.GetMouseButtonUp(0))
-        {
-            canDash = true; // Allow new dashes after release
-            CenterMousePosition();
+            CenterMousePosition(); // Optional: Reset the cursor position
+            canDash = true;       // Prevent immediate consecutive dashes
         }
     }
 
@@ -111,7 +107,8 @@ public class PlayerAttack : MonoBehaviour
         {
             // Calculate swipe direction and initiate dash
             Vector2 swipeVector = (swipeEnd - swipeStart).normalized;
-            dashDirection = swipeVector; // Assign direction
+            float dashLength = Mathf.Clamp(swipeDistance * 0.1f, 1f, playerController.slashRange); // Scale and clamp length
+            dashDirection = swipeVector * dashLength; // Assign direction
             StartDash();
         }
     }
@@ -119,8 +116,8 @@ public class PlayerAttack : MonoBehaviour
     void StartDash()
     {
         isDashing = true;
-        canDash = false; // Disable dashing until the current input is processed
-        rb.linearVelocity = dashDirection * playerController.slashRange; // Set initial velocity
+        //canDash = false; // Disable dashing until the current input is processed
+        rb.linearVelocity = dashDirection; // Set initial velocity
     }
 
     void FixedUpdate()
