@@ -13,10 +13,14 @@ public class TimerController : MonoBehaviour
         referenceTime = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
     }
 
+    public long Now(){
+        return (DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond)-referenceTime;
+    }
+
     // Update is called once per frame
     void Update()
     {
-        long time = (DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond)-referenceTime;
+        long time = Now();
         timerText.text = (((float)time)/1000-(((float)time)%10/1000)).ToString()+"s";
     }
 }
