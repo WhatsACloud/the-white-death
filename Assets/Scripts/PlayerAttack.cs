@@ -90,15 +90,16 @@ public class PlayerAttack : MonoBehaviour
         }
     }
 
+    public void ResetHealth()
+    {
+        currentHealth = maxHealth;
+        UpdateHealthUI(); // Update health display
+    }
+
     private void Die()
     {
         Debug.Log("Player has died!");
-        RestartLevel(); // Restart the level on death
-    }
-
-    private void RestartLevel()
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name); // Reload current scene
+        FindFirstObjectByType<CheckpointManager>().RespawnPlayer();
     }
 
     void DetectSwipe()
