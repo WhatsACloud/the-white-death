@@ -19,7 +19,8 @@ public class LeaderboardController : MonoBehaviour
 
         Array.Sort(runs);
         leaderboardText.text="";
-        foreach (Tuple<long, long> run in runs){
+        for (int i=0;i<(entries.Length-1) && i<10;i++){
+            Tuple<long, long> run=runs[i];
             long time = run.Item1;
             leaderboardText.text += (((float)time)/1000-(((float)time)%10/1000)).ToString()+"s";
             leaderboardText.text += " (run #" + (run.Item2+1).ToString() + ")";
