@@ -91,6 +91,7 @@ public class FlowManager : MonoBehaviour
         }
     }
 
+
     private void ApplyFlowBuffs()
     {
         // Example buffs for each flow level

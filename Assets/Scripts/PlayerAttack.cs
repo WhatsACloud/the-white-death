@@ -2,6 +2,7 @@ using UnityEngine;
 using TMPro; // Required for TextMeshPro
 using System.Collections;
 using UnityEngine.SceneManagement; // Required for scene management
+using UnityEngine.InputSystem;
 
 public class PlayerAttack : MonoBehaviour
 {
@@ -51,7 +52,22 @@ public class PlayerAttack : MonoBehaviour
         if (Input.GetMouseButtonUp(0))
         {
             canDash = true; // Allow new dashes after release
+            CenterMousePosition();
         }
+    }
+
+    private void SetMousePosition(Vector2 mousePos)
+    {
+        Mouse.current.WarpCursorPosition(mousePos);
+    }
+
+    void CenterMousePosition()
+    {
+        Vector2 screenCenter = new Vector2(Screen.width / 2f, Screen.height / 2f);
+
+        // Lock and unlock the cursor to reposition it
+
+        SetMousePosition(new Vector2((int)screenCenter.x, (int)screenCenter.y));
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
