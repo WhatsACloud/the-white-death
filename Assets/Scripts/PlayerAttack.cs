@@ -17,8 +17,11 @@ public class PlayerAttack : MonoBehaviour
     public TextMeshProUGUI healthTextTMP; // Reference to the TMP Text element
 
     private Vector2 swipeStart;          // Start position of swipe
+    private bool swiping = false;        // If user is currently doing a swipe 
+    private int swipeButton = 0;         // 0=LMB, 1=RMB
     private bool isDashing = false;      // Tracks dashing state
     private bool canDash = true;         // Prevents continuous dashing
+    private bool autoAim = false;        // true if RMB else false
     private bool isInvincible = false;   // Tracks invincibility state
     private Vector2 dashDirection;       // Direction of the dash
     private Rigidbody2D rb;              // Reference to Rigidbody2D
@@ -37,18 +40,31 @@ public class PlayerAttack : MonoBehaviour
 
     void Update()
     {
-        // Detect swipe start position
-        if (Input.GetMouseButtonDown(0) && canDash)
-        {
-            swipeStart = Input.mousePosition; // Record start position of swipe
-        }
+        // Handle dashing
+        if (canDash){
+            // Detect swipe start position
+            if (!swiping){
+                if (Input.GetMouseButtonDown(0) && canDash)
+                {
+                    swipeStart = Input.mousePosition; // Record start position of swipe
+                    autoAim = false;
+                    swipeButton = 0;
+                } else if (Input.GetMouseButtonDown(1) && canDash)
+                {
+                    swipeStart = Input.mousePosition;
+                    autoAim = true; // Autoaim if RMB
+                    swipeButton = 1;
+                }
+            }
 
-        // Execute dash on mouse release
-        if (Input.GetMouseButtonUp(0) && canDash)
-        {
-            DetectSwipe();
-            CenterMousePosition(); // Optional: Reset the cursor position
-            canDash = true;       // Prevent immediate consecutive dashes
+            // Execute dash on mouse release
+            if ((Input.GetMouseButtonUp(0) && swipeButton == 0) || 
+                (Input.GetMouseButtonUp(1) && swipeButton == 1))
+            {
+                DetectSwipe();
+                CenterMousePosition(); // Optional: Reset the cursor position
+                canDash = true;       // Prevent immediate consecutive dashes
+            }
         }
     }
 
@@ -108,7 +124,25 @@ public class PlayerAttack : MonoBehaviour
             // Calculate swipe direction and initiate dash
             Vector2 swipeVector = (swipeEnd - swipeStart).normalized;
             float dashLength = Mathf.Clamp(swipeDistance * 0.1f, 1f, playerController.slashRange); // Scale and clamp length
-            dashDirection = swipeVector * dashLength; // Assign direction
+            if (!autoAim){
+                dashDirection = swipeVector * dashLength; // Assign direction
+            } else { // Autoaim at nearest enemy
+                GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+                if (enemies.Length == 0){
+                    dashDirection = swipeVector * dashLength; // No enemies to aim at 
+                }
+
+                GameObject closestEnemy = enemies[0];
+                float closestDistance = float.PositiveInfinity;
+                foreach (GameObject enemy in enemies){ //NOTE: add check for being accessible by straight path
+                    float distance = Vector2.Distance(gameObject.transform.position, enemy.transform.position);
+                    if (distance < closestDistance){
+                        closestEnemy = enemy;
+                        closestDistance = distance;
+                    }
+                }
+                dashDirection = (closestEnemy.transform.position - gameObject.transform.position).normalized * dashLength;
+            }
             StartDash();
         }
     }
