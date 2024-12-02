@@ -73,7 +73,7 @@ public class Enemy : MonoBehaviour
         return false; 
     }
 
-    bool PlayerInSight(){
+    public bool PlayerInSight(){
         return !LineIntersectsWall(player.transform.position,gameObject.transform.position);
     }
 

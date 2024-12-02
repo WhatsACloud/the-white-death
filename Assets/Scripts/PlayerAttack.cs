@@ -138,19 +138,26 @@ public class PlayerAttack : MonoBehaviour
             } else { // Autoaim at nearest enemy
                 GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
                 if (enemies.Length == 0){
-                    dashDirection = swipeVector * dashLength; // No enemies to aim at 
-                }
-
-                GameObject closestEnemy = enemies[0];
-                float closestDistance = float.PositiveInfinity;
-                foreach (GameObject enemy in enemies){ //NOTE: add check for being accessible by straight path
-                    float distance = Vector2.Distance(gameObject.transform.position, enemy.transform.position);
-                    if (distance < closestDistance){
-                        closestEnemy = enemy;
-                        closestDistance = distance;
+                    dashDirection = swipeVector * dashLength; // No enemies to aim at
+                } else {
+                    GameObject closestEnemy = enemies[0];
+                    float closestDistance = float.PositiveInfinity;
+                    foreach (GameObject enemy in enemies){ 
+                        if (!enemy.GetComponent<Enemy>().PlayerInSight()){
+                            continue;
+                        }
+                        float distance = Vector2.Distance(gameObject.transform.position, enemy.transform.position);
+                        if (distance < closestDistance){
+                            closestEnemy = enemy;
+                            closestDistance = distance;
+                        }
+                    }
+                    if (closestDistance == float.PositiveInfinity){
+                        dashDirection = swipeVector * dashLength; // No enemies to aim at
+                    } else {
+                        dashDirection = (closestEnemy.transform.position - gameObject.transform.position).normalized * dashLength;
                     }
                 }
-                dashDirection = (closestEnemy.transform.position - gameObject.transform.position).normalized * dashLength;
             }
             StartDash();
         }
