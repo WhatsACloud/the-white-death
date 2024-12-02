@@ -13,9 +13,9 @@ public class MusicManager : MonoBehaviour
 
     [Header("Flow Music Settings")]
     public FlowMusic[] flowMusics;    // Array of music tracks for each flow state
-    public AudioSource introSource;   // AudioSource for playing intro tracks
     public AudioSource loopSource;    // AudioSource for looping tracks
-    public float fadeDuration = 3f;   // Duration of crossfade in seconds
+    public AudioSource otherLoopSource;    
+    public float fadeDuration = 0.70f;   // Duration of crossfade in seconds
 
     private int currentFlowState = -1; // Tracks the current flow state (-1 = no state)
     private Coroutine crossfadeCoroutine; // Tracks the current crossfade coroutine
@@ -42,19 +42,12 @@ public class MusicManager : MonoBehaviour
 
         // Play the intro music
         FlowMusic initialMusic = flowMusics[flowState];
-        introSource.clip = initialMusic.introClip;
         loopSource.clip = initialMusic.loopClip;
-
-        introSource.Play();
-        introSource.loop = false;
-
-        // Schedule the loop to play after the intro finishes
-        Invoke(nameof(PlayLoopMusic), initialMusic.introClip.length);
+        PlayLoopMusic();
     }
 
     private void PlayLoopMusic()
     {
-        introSource.Stop(); // Stop the intro source
         loopSource.Play();
         loopSource.loop = true;
     }
@@ -67,51 +60,37 @@ public class MusicManager : MonoBehaviour
         // Get the new flow state's music
         FlowMusic newMusic = flowMusics[flowState];
 
-        // Record the current position of the loop
-        float currentPlaybackPosition = loopSource.time;
-
-        // Stop the previous crossfade if one is running
-        if (crossfadeCoroutine != null)
-        {
-            StopCoroutine(crossfadeCoroutine);
-        }
-
+        // Note: Two should never happen at the same time.
         // Start the new crossfade
-        crossfadeCoroutine = StartCoroutine(CrossfadeToNewLoop(newMusic, currentPlaybackPosition));
+        crossfadeCoroutine = StartCoroutine(CrossfadeToNewLoop(newMusic));
     }
 
-    private System.Collections.IEnumerator CrossfadeToNewLoop(FlowMusic newMusic, float playbackPosition)
+    private System.Collections.IEnumerator CrossfadeToNewLoop(FlowMusic newMusic)
     {
-        // Fade out current music
+        // loopSource is where the new track will play.
+        (loopSource, otherLoopSource) = (otherLoopSource, loopSource);
         float elapsedTime = 0f;
-        float loopVolume = loopSource.volume;
 
-        while (elapsedTime < fadeDuration)
-        {
-            loopSource.volume = Mathf.Lerp(loopVolume, 0f, elapsedTime / fadeDuration);
-            elapsedTime += Time.deltaTime;
-            yield return null;
-        }
+        // Start new loop
+        loopSource.clip = newMusic.loopClip;
+        loopSource.Play();
+        loopSource.time = otherLoopSource.time; // Sync AFTER to make up for latency
+        loopSource.loop = true;
         loopSource.volume = 0f;
 
-        // Stop the current loop
-        loopSource.Stop();
-
-        // Switch to the new loop clip
-        loopSource.clip = newMusic.loopClip;
-        loopSource.time = playbackPosition; // Sync to the previous playback position
-        loopSource.Play();
-        loopSource.loop = true;
-
-        // Fade in the new loop
-        elapsedTime = 0f;
         while (elapsedTime < fadeDuration)
         {
+            // fade out previous
+            otherLoopSource.volume = Mathf.Lerp(1f, 0f, elapsedTime / fadeDuration);
+            // fade in new
             loopSource.volume = Mathf.Lerp(0f, 1f, elapsedTime / fadeDuration);
             elapsedTime += Time.deltaTime;
             yield return null;
         }
         loopSource.volume = 1f;
+        // Stop old loop
+        otherLoopSource.volume = 0f;
+        otherLoopSource.Stop();
     }
 }
 

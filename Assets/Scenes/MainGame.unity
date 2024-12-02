@@ -88934,26 +88934,34 @@ PrefabInstance:
       objectReference: {fileID: 925548335517514265}
     - target: {fileID: 7595284088403413775, guid: f59a9ec58f31e8b42a26331b06fb4079, type: 3}
       propertyPath: fadeDuration
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7595284088403413775, guid: f59a9ec58f31e8b42a26331b06fb4079, type: 3}
       propertyPath: flowMusics.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7595284088403413775, guid: f59a9ec58f31e8b42a26331b06fb4079, type: 3}
       propertyPath: flowMusics.Array.data[0].loopClip
       value: 
-      objectReference: {fileID: 8300000, guid: ff1709903c554244f9bb34ead26f4aba, type: 3}
+      objectReference: {fileID: 8300000, guid: 6bce7d0de982e49b98d0053dd947bc74, type: 3}
     - target: {fileID: 7595284088403413775, guid: f59a9ec58f31e8b42a26331b06fb4079, type: 3}
       propertyPath: flowMusics.Array.data[1].loopClip
+      value: 
+      objectReference: {fileID: 8300000, guid: ff1709903c554244f9bb34ead26f4aba, type: 3}
+    - target: {fileID: 7595284088403413775, guid: f59a9ec58f31e8b42a26331b06fb4079, type: 3}
+      propertyPath: flowMusics.Array.data[2].loopClip
       value: 
       objectReference: {fileID: 8300000, guid: 6073c5dd8c8f9274f9049279f16eccf2, type: 3}
     - target: {fileID: 7595284088403413775, guid: f59a9ec58f31e8b42a26331b06fb4079, type: 3}
       propertyPath: flowMusics.Array.data[0].introClip
       value: 
-      objectReference: {fileID: 8300000, guid: 5d760a34c6bf59c459bf1dfc141d2b29, type: 3}
+      objectReference: {fileID: 8300000, guid: 72b7c15c04f444f05ac718d5e3ae915e, type: 3}
     - target: {fileID: 7595284088403413775, guid: f59a9ec58f31e8b42a26331b06fb4079, type: 3}
       propertyPath: flowMusics.Array.data[1].introClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 5d760a34c6bf59c459bf1dfc141d2b29, type: 3}
+    - target: {fileID: 7595284088403413775, guid: f59a9ec58f31e8b42a26331b06fb4079, type: 3}
+      propertyPath: flowMusics.Array.data[2].introClip
       value: 
       objectReference: {fileID: 8300000, guid: 3172df0d0d476734bb4601e4cd52babf, type: 3}
     m_RemovedComponents: []
