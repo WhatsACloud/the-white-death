@@ -10,8 +10,8 @@ public class TutorialEnemyHealth : EnemyHealth
     }
     private void StartGame()
     {
-        FindFirstObjectByType<TimerController>().StartTimer();
-        FindFirstObjectByType<SpawningManager>().StartSpawning();
+        // FindFirstObjectByType<TimerController>().StartTimer();
+        // FindFirstObjectByType<SpawningManager>().StartSpawning();
         DisableWalls();
     }
 

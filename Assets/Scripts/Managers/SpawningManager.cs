@@ -13,17 +13,6 @@ public class SpawningManager : MonoBehaviour
     public float clusterSpread;
 
     private GameObject player;            // Reference to player (object)
-    private bool isSpawning = false; // Track whether spawning is active
-
-    public void StartSpawning()
-    {
-        isSpawning = true; // Enable spawning
-    }
-
-    public void StopSpawning()
-    {
-        isSpawning = false; // Disable spawning
-    }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -46,7 +35,6 @@ public class SpawningManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!isSpawning) return; // Exit Update if spawning is inactive
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
         for (int i = 0; i < enemies.Length; i++)
         {   
