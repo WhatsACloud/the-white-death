@@ -17,7 +17,7 @@ TagManager:
   - EnemyLayer
   - 
   - postProcessing
-  - 
+  - test
   - 
   - 
   - 
@@ -46,6 +46,9 @@ TagManager:
     locked: 0
   - name: Entities
     uniqueID: 2945824469
+    locked: 0
+  - name: UI
+    uniqueID: 432994923
     locked: 0
   m_RenderingLayers:
   - Default
