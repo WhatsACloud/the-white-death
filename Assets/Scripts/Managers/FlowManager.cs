@@ -22,7 +22,6 @@ public class FlowManager : MonoBehaviour
     public int currentFlow;      // Current flow value
     public int enemyFlow;     // Flow per enemy
     public int dashCost;        // Flow cost for dashing
-    public float decayRate;     // Flow decay rate per second
 
     [Header("UI References")]
     public Slider flowSlider;
@@ -49,13 +48,6 @@ public class FlowManager : MonoBehaviour
 
     void Update()
     {
-        // Decay flow over time
-        if (currentFlow > 0)
-        {
-            currentFlow -= Mathf.FloorToInt(decayRate * Time.deltaTime);
-            if (currentFlow < 0) currentFlow = 0;
-        }
-
         // Update flow level based on current flow
         UpdateFlowState();
 

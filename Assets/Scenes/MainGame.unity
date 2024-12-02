@@ -3269,7 +3269,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Reach 200m mark to win!
+  m_text: Reach 555m mark to win!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3770,7 +3770,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2083493574330266594, guid: f59a9ec58f31e8b42a26331b06fb4079, type: 3}
       propertyPath: maxFlow
-      value: 300
+      value: 312
       objectReference: {fileID: 0}
     - target: {fileID: 2083493574330266594, guid: f59a9ec58f31e8b42a26331b06fb4079, type: 3}
       propertyPath: dashCost
@@ -3874,7 +3874,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2083493574330266594, guid: f59a9ec58f31e8b42a26331b06fb4079, type: 3}
       propertyPath: flowLevels.Array.data[2].flowThreshold
-      value: 230
+      value: 300
       objectReference: {fileID: 0}
     - target: {fileID: 3498636043007663093, guid: f59a9ec58f31e8b42a26331b06fb4079, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3990,7 +3990,7 @@ PrefabInstance:
       objectReference: {fileID: 325827473}
     - target: {fileID: 8855973078160976363, guid: f59a9ec58f31e8b42a26331b06fb4079, type: 3}
       propertyPath: maxDistance
-      value: 200
+      value: 555
       objectReference: {fileID: 0}
     - target: {fileID: 8855973078160976363, guid: f59a9ec58f31e8b42a26331b06fb4079, type: 3}
       propertyPath: distanceText
