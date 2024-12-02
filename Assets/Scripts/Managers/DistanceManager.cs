@@ -1,29 +1,34 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class DistanceManager : MonoBehaviour
 {
     public Transform player; // Assign the player in the Inspector
     public TMP_Text distanceText; // Assign a UI Text element in the Inspector
-    public int maxDistance = 200; // Maximum distance for display
+    public int maxDistance = 20; // Maximum distance for display
 
+    void Start(){
+    }
     void Update()
-    {
+    { 
+        float distance = Mathf.Abs(player.position.y); 
         if (player != null && distanceText != null)
         {
-            // Get and round the player's Y position
-            float playerY = Mathf.Round(player.position.y);
-
             // Update the UI Text with the format "[Y-pos]/200m"
-            distanceText.text = $"{playerY}/{maxDistance}m";
+            distanceText.text = $"{Mathf.Round(distance)}/{maxDistance}m";
         }
-        else if (distanceText == null)
-        {
-            Debug.LogWarning("Distance Text UI is not assigned!");
-        }
-        else
-        {
-            Debug.LogWarning("Player is not assigned in DistanceManager!");
+        if (distance > maxDistance){
+            string history=PlayerPrefs.GetString("History");
+            history+=FindFirstObjectByType<TimerController>().Now()+",";
+            PlayerPrefs.SetString("History",history);
+            Debug.Log(PlayerPrefs.GetString("History"));
+
+            //NOTE: PlayerPrefs.SetString("History","") to clear leaderboard etc.
+
+            SceneManager.LoadScene("StartScreen");
+            GameObject manager = GameObject.Find("Manager");
+            Destroy(manager);
         }
     }
 }
