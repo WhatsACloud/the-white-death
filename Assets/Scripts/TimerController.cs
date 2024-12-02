@@ -6,12 +6,12 @@ public class TimerController : MonoBehaviour
 {
     private TextMeshProUGUI timerText;
     private long referenceTime = 0;
-    private bool isRunning = false; // Track if the timer is running
+    public bool isRunning = false; // Track if the timer is running
 
     void Start()
     {
         timerText = GetComponent<TextMeshProUGUI>();
-        ResetTimer(); // Initialize the timer but keep it stopped
+        ResetTimer(); // Initialize the timer 
     }
 
     /// <summary>
