@@ -128,8 +128,9 @@ public class PlayerAttack : MonoBehaviour
         Vector2 swipeEnd = Input.mousePosition; // Use current mouse position
         float swipeDistance = Vector2.Distance(swipeStart, swipeEnd); // Calculate distance
 
-        if (swipeDistance >= minSwipeDistance && FlowManager.instance.CanDash())
+        if (swipeDistance >= minSwipeDistance)
         {
+            FlowManager.instance.DashHandler();
             // Calculate swipe direction and initiate dash
             Vector2 swipeVector = (swipeEnd - swipeStart).normalized;
             float dashLength = Mathf.Clamp(swipeDistance * 0.1f, 1f, playerController.slashRange); // Scale and clamp length

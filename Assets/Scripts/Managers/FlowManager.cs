@@ -18,11 +18,11 @@ public class FlowManager : MonoBehaviour
     public FlowLevel[] flowLevels; // Configure this in the Inspector
 
     [Header("Flow Settings")]
-    public int maxFlow = 300;         // Maximum flow value
-    public int currentFlow = 0;      // Current flow value
-    public int flowPerKill = 25;     // Flow gained per enemy kill
-    public int dashCost = 10;        // Flow cost for dashing
-    public float decayRate = 1f;     // Flow decay rate per second
+    public int maxFlow;         // Maximum flow value
+    public int currentFlow;      // Current flow value
+    public int enemyFlow;     // Flow per enemy
+    public int dashCost;        // Flow cost for dashing
+    public float decayRate;     // Flow decay rate per second
 
     [Header("UI References")]
     public Slider flowSlider;
@@ -63,10 +63,11 @@ public class FlowManager : MonoBehaviour
         UpdateFlowUI();
     }
 
-    public bool CanDash()
-    {
-        // Check if the player has enough flow to dash
-        return currentFlow >= dashCost;
+
+    public void DashHandler(){
+        if (currentFlow > dashCost){
+            currentFlow -= dashCost;
+        }
     }
 
     public void GainFlow(int amount)

@@ -20,7 +20,7 @@ public class EnemyHealth : MonoBehaviour
 
         if (health <= 0)
         {
-            FindFirstObjectByType<FlowManager>().GainFlow(25);
+            FindFirstObjectByType<FlowManager>().GainFlow(FindFirstObjectByType<FlowManager>().enemyFlow);
             explosionEffect.transform.parent = null; // Detach to play independently
             explosionEffect.Play();
 
