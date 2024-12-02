@@ -26,7 +26,7 @@ public class DisplayLastScore : MonoBehaviour
             if (!string.IsNullOrEmpty(secondLastScore))
             {
                 long time = long.Parse(secondLastScore);
-                scoreText.text = "Your last time: " + (((float)time)/1000-(((float)time)%10/1000)).ToString()+"s";
+                scoreText.text = (((float)time)/1000-(((float)time)%10/1000)).ToString()+"s";
             }
         }
         else
