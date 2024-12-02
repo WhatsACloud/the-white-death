@@ -3,6 +3,10 @@ using UnityEngine.SceneManagement; // Required for scene management
 
 public class Playbutton: MonoBehaviour
 {
+    //public void Start()
+    //{
+    //    PlayerPrefs.SetString("History", "");
+    //}
     public void EnterGame()
     {
         SceneManager.LoadScene("MainGame");
