@@ -29,6 +29,7 @@ public class PlayerAttack : MonoBehaviour
 
     private PlayerController playerController; // Reference to PlayerController
     private TimerController timer;
+    private DistanceManager distanceManager;
 
     void Start()
     {
@@ -38,6 +39,7 @@ public class PlayerAttack : MonoBehaviour
         currentHealth = maxHealth; // Initialize health
         UpdateHealthUI(); // Update health UI at the start
         timer = FindFirstObjectByType<TimerController>();
+        distanceManager = FindFirstObjectByType<DistanceManager>();
     }
 
     void Update()
@@ -136,6 +138,8 @@ public class PlayerAttack : MonoBehaviour
             if (!timer.isRunning){
                 timer.StartTimer();
             }
+            distanceManager.DashCallback();
+
             // Calculate swipe direction and initiate dash
             Vector2 swipeVector = (swipeEnd - swipeStart).normalized;
             float dashLength = Mathf.Clamp(swipeDistance * 0.1f, 1f, playerController.slashRange); // Scale and clamp length

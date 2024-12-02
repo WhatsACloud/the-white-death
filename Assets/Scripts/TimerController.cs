@@ -32,6 +32,7 @@ public class TimerController : MonoBehaviour
     public void StopTimer()
     {
         isRunning = false;
+        timerText.text = "";
     }
 
     /// <summary>
