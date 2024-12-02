@@ -35,7 +35,7 @@ public class Enemy : MonoBehaviour
 
         if (fireTimer >= fireInterval)
         {
-            FireProjectile();
+            //FireProjectile();
             fireTimer = 0;
         }
 
