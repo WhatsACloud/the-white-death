@@ -7,6 +7,10 @@ public class Checkpoint : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             FindFirstObjectByType<CheckpointManager>().SetCheckpoint(transform.position);
+            Color color;
+            ColorUtility.TryParseHtmlString("#00db4d", out color);
+            SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
+            spriteRenderer.color = color;
         }
     }
 }
