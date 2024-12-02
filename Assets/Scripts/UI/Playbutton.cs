@@ -6,6 +6,8 @@ public class Playbutton: MonoBehaviour
     public void EnterGame()
     {
         SceneManager.LoadScene("MainGame");
+        GameObject sceneManager = GameObject.Find("SceneManager");
+        Destroy(sceneManager);
     }
     public void EnterLeaderboard()
     {
