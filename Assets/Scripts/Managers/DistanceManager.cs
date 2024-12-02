@@ -47,11 +47,9 @@ public class DistanceManager : MonoBehaviour
 
     public void UpdateGameOverText(){
         // Calculate seconds and milliseconds
-        float seconds = (float)time / 1000;
-        float milliseconds = (float)(time % 1000) / 1000;
 
-        gameOverText.text = $"You made it! \nIn just ${seconds + milliseconds:F3}s too!\nDash {3-dashCounter} more time";
-        if (dashCounter > 1){
+        gameOverText.text = $"You made it! \nIn just ${time/1000}.{time%1000}s too!\nDash {3-dashCounter} more time";
+        if (dashCounter < 2){
             gameOverText.text += "s to end game.";
         } else {
             gameOverText.text += " to end game.";
