@@ -25,6 +25,8 @@ public class EndAreaTrigger : MonoBehaviour
 
         //NOTE: PlayerPrefs.SetString("History","") to clear leaderboard etc.
 
+        GameObject manager = GameObject.Find("Manager");
+        Destroy(manager);
         SceneManager.LoadScene("StartScreen");
     }
 }

@@ -19,6 +19,7 @@ public class MusicManager : MonoBehaviour
 
     private int currentFlowState = -1; // Tracks the current flow state (-1 = no state)
     private Coroutine crossfadeCoroutine; // Tracks the current crossfade coroutine
+    public float volume = 1f;
 
     void Awake()
     {
@@ -43,6 +44,7 @@ public class MusicManager : MonoBehaviour
         // Play the intro music
         FlowMusic initialMusic = flowMusics[flowState];
         loopSource.clip = initialMusic.loopClip;
+        loopSource.volume=volume;
         PlayLoopMusic();
     }
 
@@ -81,13 +83,13 @@ public class MusicManager : MonoBehaviour
         while (elapsedTime < fadeDuration)
         {
             // fade out previous
-            otherLoopSource.volume = Mathf.Lerp(1f, 0f, elapsedTime / fadeDuration);
+            otherLoopSource.volume = Mathf.Lerp(volume, 0f, elapsedTime / fadeDuration);
             // fade in new
-            loopSource.volume = Mathf.Lerp(0f, 1f, elapsedTime / fadeDuration);
+            loopSource.volume = Mathf.Lerp(0f, volume, elapsedTime / fadeDuration);
             elapsedTime += Time.deltaTime;
             yield return null;
         }
-        loopSource.volume = 1f;
+        loopSource.volume = volume;
         // Stop old loop
         otherLoopSource.volume = 0f;
         otherLoopSource.Stop();
