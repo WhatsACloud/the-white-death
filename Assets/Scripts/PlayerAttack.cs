@@ -167,6 +167,7 @@ public class PlayerAttack : MonoBehaviour
     {
         isDashing = true;
         //canDash = false; // Disable dashing until the current input is processed
+        SFXManager.Instance.PlaySFX("dash");
         rb.linearVelocity = dashDirection; // Set initial velocity
     }
 

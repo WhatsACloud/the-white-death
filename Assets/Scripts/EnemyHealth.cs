@@ -26,6 +26,8 @@ public class EnemyHealth : MonoBehaviour
 
             impulseSource.GenerateImpulse();
 
+            SFXManager.Instance.PlaySFX("enemyDeath");
+
             Destroy(gameObject); // Remove enemy when health drops to 0
         }
     }
