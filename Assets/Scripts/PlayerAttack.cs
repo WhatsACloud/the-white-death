@@ -28,6 +28,7 @@ public class PlayerAttack : MonoBehaviour
     private SpriteRenderer spriteRenderer; // For flashing effect
 
     private PlayerController playerController; // Reference to PlayerController
+    private TimerController timer;
 
     void Start()
     {
@@ -36,6 +37,7 @@ public class PlayerAttack : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>(); // For visual flashing
         currentHealth = maxHealth; // Initialize health
         UpdateHealthUI(); // Update health UI at the start
+        timer = FindFirstObjectByType<TimerController>();
     }
 
     void Update()
@@ -131,6 +133,9 @@ public class PlayerAttack : MonoBehaviour
         if (swipeDistance >= minSwipeDistance)
         {
             FlowManager.instance.DashHandler();
+            if (!timer.isRunning){
+                timer.StartTimer();
+            }
             // Calculate swipe direction and initiate dash
             Vector2 swipeVector = (swipeEnd - swipeStart).normalized;
             float dashLength = Mathf.Clamp(swipeDistance * 0.1f, 1f, playerController.slashRange); // Scale and clamp length
