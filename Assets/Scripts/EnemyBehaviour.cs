@@ -2,13 +2,13 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    public GameObject projectilePrefab;   // Assign the projectile prefab in the Inspector
-    public Transform firePoint;           // Point where projectiles spawn
-    public float fireInterval = 2f;       // Time between shots
+    // public GameObject projectilePrefab;   // Assign the projectile prefab in the Inspector
+    // public Transform firePoint;           // Point where projectiles spawn
+    // public float fireInterval = 2f;       // Time between shots
 
     private Transform playerPos;          // Reference to the player (the location)
     private GameObject player;            // Reference to player (object)
-    private float fireTimer;              // Timer to track when to shoot
+    // private float fireTimer;              // Timer to track when to shoot
     private float moveCountdown = 0;          // Timer to track when to move
     private Rigidbody2D rb;
     private bool awoken = false;               // Seen player yet
@@ -30,14 +30,14 @@ public class Enemy : MonoBehaviour
 
     void Update()
     {
-        fireTimer += Time.deltaTime;
+        // fireTimer += Time.deltaTime;
         moveCountdown -= Time.deltaTime;
 
-        if (fireTimer >= fireInterval)
-        {
-            //FireProjectile();
-            fireTimer = 0;
-        }
+        // if (fireTimer >= fireInterval)
+        // {
+        //     FireProjectile();
+        //     fireTimer = 0;
+        // }
 
         if (moveCountdown <= 0){
             moveCountdown = 0.2f + Random.Range(0f, 0.5f);
@@ -78,34 +78,34 @@ public class Enemy : MonoBehaviour
     }
 
     void Move(){
-        if (PlayerInSight()){
-            Vector2 direction = (firePoint.position - playerPos.position).normalized;
+        // if (PlayerInSight()){
+            Vector2 direction = (gameObject.transform.position - playerPos.position).normalized;
             rb.linearVelocity = (direction * Random.Range(0f, 5f));
-        }
+        // }
     }
 
     void FireProjectile()
     {
-        if (player != null && awoken)
-        {
-            // if (gameObject.GetComponent<Collider>() == null){
-            //     gameObject.AddComponent<BoxCollider2D>();
-            // }
-            // Instantiate projectile
-            GameObject projectile = Instantiate(projectilePrefab, firePoint.position, Quaternion.identity);
+        // if (player != null && awoken)
+        // {
+        //     // if (gameObject.GetComponent<Collider>() == null){
+        //     //     gameObject.AddComponent<BoxCollider2D>();
+        //     // }
+        //     // Instantiate projectile
+        //     GameObject projectile = Instantiate(projectilePrefab, firePoint.position, Quaternion.identity);
 
-            // projectile.AddComponent<BoxCollider2D>();
-            // Physics2D.IgnoreCollision(projectile.GetComponent<Collider2D>(), gameObject.GetComponent<Collider2D>(),true);
-            // projectile.GetComponent<Collider2D>().enabled = false;
-            Vector2 direction = playerPos.position - firePoint.position;
+        //     // projectile.AddComponent<BoxCollider2D>();
+        //     // Physics2D.IgnoreCollision(projectile.GetComponent<Collider2D>(), gameObject.GetComponent<Collider2D>(),true);
+        //     // projectile.GetComponent<Collider2D>().enabled = false;
+        //     Vector2 direction = playerPos.position - firePoint.position;
 
-            // Set projectile direction
-            Projectile projectileScript = projectile.GetComponent<Projectile>();
-            if (projectileScript != null)
-            {
-                projectileScript.SetDirection(direction);
-            }
-        }
+        //     // Set projectile direction
+        //     Projectile projectileScript = projectile.GetComponent<Projectile>();
+        //     if (projectileScript != null)
+        //     {
+        //         projectileScript.SetDirection(direction);
+        //     }
+        // }
     }
 }
 
