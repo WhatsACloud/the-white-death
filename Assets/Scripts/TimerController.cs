@@ -11,7 +11,8 @@ public class TimerController : MonoBehaviour
     void Start()
     {
         timerText = GetComponent<TextMeshProUGUI>();
-        ResetTimer(); // Initialize the timer but keep it stopped
+        ResetTimer(); // Initialize the timer 
+        StartTimer();
     }
 
     /// <summary>
