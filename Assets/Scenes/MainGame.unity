@@ -88920,6 +88920,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5571707043889292579, guid: f59a9ec58f31e8b42a26331b06fb4079, type: 3}
+      propertyPath: m_Name
+      value: OtherLoopSource
+      objectReference: {fileID: 0}
     - target: {fileID: 6760332389189328476, guid: f59a9ec58f31e8b42a26331b06fb4079, type: 3}
       propertyPath: m_Name
       value: Manager
@@ -88936,6 +88940,10 @@ PrefabInstance:
       propertyPath: fadeDuration
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 7595284088403413775, guid: f59a9ec58f31e8b42a26331b06fb4079, type: 3}
+      propertyPath: otherLoopSource
+      value: 
+      objectReference: {fileID: 925548335517514265}
     - target: {fileID: 7595284088403413775, guid: f59a9ec58f31e8b42a26331b06fb4079, type: 3}
       propertyPath: flowMusics.Array.size
       value: 3
