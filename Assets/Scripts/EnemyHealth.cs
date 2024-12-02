@@ -14,7 +14,7 @@ public class EnemyHealth : MonoBehaviour
 
     }
 
-    public void TakeDamage(int damage)
+    public void BaseTakeDamage(int damage)
     {
         health -= damage;
 
@@ -30,6 +30,11 @@ public class EnemyHealth : MonoBehaviour
 
             Destroy(gameObject); // Remove enemy when health drops to 0
         }
+    }
+
+    public virtual void TakeDamage(int damage)
+    {
+        BaseTakeDamage(damage);
     }
 }
 
