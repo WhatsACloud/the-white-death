@@ -26,12 +26,11 @@ public class DistanceManager : MonoBehaviour
         {
             // Update the UI Text with the format "[Y-pos]/200m"
             distanceText.text = $"{Mathf.Round(distance)}/{maxDistance}m";
-            if (distance < -1.5){
-                distanceText.text += "\nGo the other way :)";
-            } 
             if (distance < -10){
                 distanceText.text += "\nThere is literally nothing on this side.";
-            }
+            } else if (distance < -1.5){
+                distanceText.text += "\nGo the other way :)";
+            } 
         }
         if (distance > maxDistance && !gameFinished){ // text & dash thrice
             gameFinished = true;
