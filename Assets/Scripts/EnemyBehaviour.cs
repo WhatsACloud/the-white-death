@@ -80,7 +80,7 @@ public class Enemy : MonoBehaviour
     void Move(){
         // if (PlayerInSight()){
             Vector2 direction = (gameObject.transform.position - playerPos.position).normalized;
-            rb.linearVelocity = (direction * Random.Range(0f, 5f));
+            rb.linearVelocity = (direction * (4f + Random.Range(0f, 3f)));
         // }
     }
 

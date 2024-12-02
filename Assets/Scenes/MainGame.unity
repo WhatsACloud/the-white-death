@@ -317,11 +317,27 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 110381787}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 97835951db11d084cb4428b8c79f2a79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &110381796
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 110381787}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67d391bbf4a414862a31115c4d99558d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyPrefab: {fileID: 2547581809896578072, guid: 2e977fca0a72ef446bb2b8008436a2b6, type: 3}
+  enemyN: 10
+  clusterMin: 1
+  clusterVariance: 3
 --- !u!4 &325827473 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3329307374438321899, guid: e0f0239a2d03c7b48bd801ca212424d5, type: 3}
@@ -2110,7 +2126,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.7924528, g: 0.25044498, b: 0.2556566, a: 1}
+  m_Color: {r: 0.2509804, g: 0.27070457, b: 0.7921569, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -2674,6 +2690,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6760332389189328476, guid: f59a9ec58f31e8b42a26331b06fb4079, type: 3}
       insertIndex: -1
       addedObject: {fileID: 110381791}
+    - targetCorrespondingSourceObject: {fileID: 6760332389189328476, guid: f59a9ec58f31e8b42a26331b06fb4079, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 110381796}
   m_SourcePrefab: {fileID: 100100000, guid: f59a9ec58f31e8b42a26331b06fb4079, type: 3}
 --- !u!82 &925548335517514264 stripped
 AudioSource:

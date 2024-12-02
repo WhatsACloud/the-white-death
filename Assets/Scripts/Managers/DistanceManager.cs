@@ -12,11 +12,17 @@ public class DistanceManager : MonoBehaviour
     }
     void Update()
     { 
-        float distance = Mathf.Abs(player.position.y); 
+        float distance = player.position.y; 
         if (player != null && distanceText != null)
         {
             // Update the UI Text with the format "[Y-pos]/200m"
             distanceText.text = $"{Mathf.Round(distance)}/{maxDistance}m";
+            if (distance < -1.5){
+                distanceText.text += "\nGo the other way :)";
+            } 
+            if (distance < -10){
+                distanceText.text += "\nThere is literally nothing on this side.";
+            }
         }
         if (distance > maxDistance){
             string history=PlayerPrefs.GetString("History");
