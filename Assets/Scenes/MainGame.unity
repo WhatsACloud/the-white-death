@@ -3770,15 +3770,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2083493574330266594, guid: f59a9ec58f31e8b42a26331b06fb4079, type: 3}
       propertyPath: maxFlow
-      value: 312
+      value: 500
       objectReference: {fileID: 0}
     - target: {fileID: 2083493574330266594, guid: f59a9ec58f31e8b42a26331b06fb4079, type: 3}
       propertyPath: dashCost
-      value: 2
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 2083493574330266594, guid: f59a9ec58f31e8b42a26331b06fb4079, type: 3}
       propertyPath: enemyFlow
-      value: 18
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 2083493574330266594, guid: f59a9ec58f31e8b42a26331b06fb4079, type: 3}
       propertyPath: flowSlider
@@ -4035,7 +4035,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1356217043355928952, guid: e0f0239a2d03c7b48bd801ca212424d5, type: 3}
       propertyPath: baseSlashRange
-      value: 20
+      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 2547581809896578072, guid: e0f0239a2d03c7b48bd801ca212424d5, type: 3}
       propertyPath: m_Name
