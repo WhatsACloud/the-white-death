@@ -26,12 +26,11 @@ public class DistanceManager : MonoBehaviour
         {
             // Update the UI Text with the format "[Y-pos]/200m"
             distanceText.text = $"{Mathf.Round(distance)}/{maxDistance}m";
-            if (distance < -1.5){
-                distanceText.text += "\nGo the other way :)";
-            } 
             if (distance < -10){
                 distanceText.text += "\nThere is literally nothing on this side.";
-            }
+            } else if (distance < -1.5){
+                distanceText.text += "\nGo the other way :)";
+            } 
         }
         if (distance > maxDistance && !gameFinished){ // text & dash thrice
             gameFinished = true;
@@ -47,11 +46,9 @@ public class DistanceManager : MonoBehaviour
 
     public void UpdateGameOverText(){
         // Calculate seconds and milliseconds
-        float seconds = (float)time / 1000;
-        float milliseconds = (float)(time % 1000) / 1000;
 
-        gameOverText.text = $"You made it! \nIn just ${seconds + milliseconds:F3}s too!\nDash {3-dashCounter} more time";
-        if (dashCounter > 1){
+        gameOverText.text = $"You made it! \nIn just ${time/1000}.{time%1000}s too!\nDash {3-dashCounter} more time";
+        if (dashCounter < 2){
             gameOverText.text += "s to end game.";
         } else {
             gameOverText.text += " to end game.";
