@@ -335,6 +335,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyPrefab: {fileID: 2547581809896578072, guid: 2e977fca0a72ef446bb2b8008436a2b6, type: 3}
+<<<<<<< HEAD
   enoughEnemies: 9
   clusterMin: 1
   clusterVariance: 3
@@ -342,6 +343,20 @@ MonoBehaviour:
   spawnDeltaY: 10
   spawnSpreadX: 15
   clusterSpread: 3
+=======
+  enoughEnemies: 0
+  clusterMin: 1
+  clusterVariance: 3
+  maxDistance: 0
+  spawnDeltaY: 0
+  spawnSpreadX: 0
+  clusterSpread: 0
+--- !u!82 &110381797 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 4093419628292652397, guid: f59a9ec58f31e8b42a26331b06fb4079, type: 3}
+  m_PrefabInstance: {fileID: 925548335517514263}
+  m_PrefabAsset: {fileID: 0}
+>>>>>>> ed8358daecefed0beee57c810fefdf2185c6df9e
 --- !u!4 &325827473 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3329307374438321899, guid: e0f0239a2d03c7b48bd801ca212424d5, type: 3}
@@ -2283,6 +2298,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: OtherLoopSource
       objectReference: {fileID: 0}
+    - target: {fileID: 6087190540691626435, guid: f59a9ec58f31e8b42a26331b06fb4079, type: 3}
+      propertyPath: audioSource
+      value: 
+      objectReference: {fileID: 110381797}
+    - target: {fileID: 6087190540691626435, guid: f59a9ec58f31e8b42a26331b06fb4079, type: 3}
+      propertyPath: sfxEntries.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6087190540691626435, guid: f59a9ec58f31e8b42a26331b06fb4079, type: 3}
+      propertyPath: sfxEntries.Array.data[2].key
+      value: dash
+      objectReference: {fileID: 0}
+    - target: {fileID: 6087190540691626435, guid: f59a9ec58f31e8b42a26331b06fb4079, type: 3}
+      propertyPath: sfxEntries.Array.data[2].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 0ed53e2d434837b40a01f29919667661, type: 3}
     - target: {fileID: 6760332389189328476, guid: f59a9ec58f31e8b42a26331b06fb4079, type: 3}
       propertyPath: m_Name
       value: Manager
