@@ -8,6 +8,7 @@ public struct FlowLevel
     public string levelName;   // Name of the flow level, e.g., "CALM"
     public Color levelColor;   // Corresponding color for the level
     public int flowThreshold;  // Minimum flow required to reach this level
+    public Image background;
 }
 
 public class FlowManager : MonoBehaviour
@@ -26,6 +27,7 @@ public class FlowManager : MonoBehaviour
     [Header("UI References")]
     public Slider flowSlider;
     public Image flowBarFill;
+    public Image background; 
     public TextMeshProUGUI flowLevelText; // Reference to the Flow Level text
 
     private int currentFlowState = 0; // Index of the current flow level
@@ -111,17 +113,34 @@ public class FlowManager : MonoBehaviour
         MusicManager.instance.ChangeMusicForFlowState(currentFlowState);
     }
 
+    private void UpdateBar(float proportion){
+        if (proportion > 0.10f){
+            flowSlider.value=Mathf.Lerp(0.141f, 1.000f, (proportion - 0.10f) / 0.90f);
+        } else {
+            flowSlider.value=0.064f;
+        }
+    }
     private void UpdateFlowUI()
     {
-        float actualFlow = (float)currentFlow - flowLevels[currentFlowState].flowThreshold;
-        // Update the fill amount of the Flow Bar
-        if (flowSlider != null)
-        {
-            flowSlider.value = actualFlow;
-
-            // Change the bar's color to match the current flow level
-            flowBarFill.color = flowLevels[currentFlowState].levelColor;
+        int nextThreshold = 0;
+        if (currentFlowState == flowLevels.Length-1){
+            nextThreshold = maxFlow;
+            Debug.Log("last stage");
+            Debug.Log((float)currentFlow - flowLevels[currentFlowState].flowThreshold);
+            Debug.Log((float)nextThreshold);
+        } else {
+            nextThreshold = flowLevels[currentFlowState+1].flowThreshold;
         }
+        float flowProportion = ((float)currentFlow - flowLevels[currentFlowState].flowThreshold) / 
+            ((float)nextThreshold - flowLevels[currentFlowState].flowThreshold);
+        UpdateBar(flowProportion);
+        // Change the bar's color to match the current flow level
+        flowBarFill.color = flowLevels[currentFlowState].levelColor;
+        // background.sprite = flowLevels[currentFlowState].background;
+        foreach (FlowLevel level in flowLevels){
+            level.background.enabled = false;
+        }
+        flowLevels[currentFlowState].background.enabled = true;
 
         // Update the level text to display the current flow level name
         if (flowLevelText != null)
