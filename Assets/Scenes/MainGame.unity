@@ -1011,6 +1011,79 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2e977fca0a72ef446bb2b8008436a2b6, type: 3}
+--- !u!1001 &384732360
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -7211127798228941797, guid: 2e977fca0a72ef446bb2b8008436a2b6, type: 3}
+      propertyPath: ImpulseDefinition.ImpulseShape
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2085866432762131170, guid: 2e977fca0a72ef446bb2b8008436a2b6, type: 3}
+      propertyPath: m_SortingLayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2085866432762131170, guid: 2e977fca0a72ef446bb2b8008436a2b6, type: 3}
+      propertyPath: m_SortingOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2085866432762131170, guid: 2e977fca0a72ef446bb2b8008436a2b6, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -1349142827
+      objectReference: {fileID: 0}
+    - target: {fileID: 2547581809896578072, guid: 2e977fca0a72ef446bb2b8008436a2b6, type: 3}
+      propertyPath: m_Name
+      value: Hothead (6)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3329307374438321899, guid: 2e977fca0a72ef446bb2b8008436a2b6, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.66
+      objectReference: {fileID: 0}
+    - target: {fileID: 3329307374438321899, guid: 2e977fca0a72ef446bb2b8008436a2b6, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.91
+      objectReference: {fileID: 0}
+    - target: {fileID: 3329307374438321899, guid: 2e977fca0a72ef446bb2b8008436a2b6, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3329307374438321899, guid: 2e977fca0a72ef446bb2b8008436a2b6, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3329307374438321899, guid: 2e977fca0a72ef446bb2b8008436a2b6, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3329307374438321899, guid: 2e977fca0a72ef446bb2b8008436a2b6, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3329307374438321899, guid: 2e977fca0a72ef446bb2b8008436a2b6, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3329307374438321899, guid: 2e977fca0a72ef446bb2b8008436a2b6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3329307374438321899, guid: 2e977fca0a72ef446bb2b8008436a2b6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3329307374438321899, guid: 2e977fca0a72ef446bb2b8008436a2b6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 2e977fca0a72ef446bb2b8008436a2b6, type: 3}
 --- !u!1001 &385291877
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -88575,6 +88648,7 @@ GameObject:
   - component: {fileID: 2126214344}
   - component: {fileID: 2126214343}
   - component: {fileID: 2126214342}
+  - component: {fileID: 2126214345}
   m_Layer: 0
   m_Name: CinemachineCamera
   m_TagString: Untagged
@@ -88671,6 +88745,29 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2126214345
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2126214341}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00b2d199b96b516448144ab30fb26aed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ApplyAfter: 2
+  ChannelMask: 1
+  Gain: 1
+  Use2DDistance: 0
+  UseCameraSpace: 1
+  ReactionSettings:
+    m_SecondaryNoise: {fileID: 0}
+    AmplitudeGain: 1
+    FrequencyGain: 1
+    Duration: 1
+    m_NoiseOffsets: {x: 0, y: 0, z: 0}
 --- !u!1001 &925548335517514263
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -89003,6 +89100,7 @@ SceneRoots:
   - {fileID: 837874183}
   - {fileID: 718576979}
   - {fileID: 2065246191}
+  - {fileID: 384732360}
   - {fileID: 274029747}
   - {fileID: 1176279272}
   - {fileID: 1556708579}

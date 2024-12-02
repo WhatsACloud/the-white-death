@@ -1,8 +1,18 @@
 using UnityEngine;
+using Unity.Cinemachine;
 
 public class EnemyHealth : MonoBehaviour
 {
     public int health = 50; // Enemy's health
+
+    public ParticleSystem explosionEffect;
+    private Unity.Cinemachine.CinemachineImpulseSource impulseSource;
+
+    public void Start()
+    {
+        impulseSource = GetComponent<Unity.Cinemachine.CinemachineImpulseSource>();
+
+    }
 
     public void TakeDamage(int damage)
     {
@@ -11,6 +21,11 @@ public class EnemyHealth : MonoBehaviour
         if (health <= 0)
         {
             FindFirstObjectByType<FlowManager>().GainFlow(25);
+            explosionEffect.transform.parent = null; // Detach to play independently
+            explosionEffect.Play();
+
+            impulseSource.GenerateImpulse();
+
             Destroy(gameObject); // Remove enemy when health drops to 0
         }
     }

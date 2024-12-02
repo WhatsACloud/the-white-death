@@ -35,6 +35,11 @@ public class FlowManager : MonoBehaviour
     void Start()
     {
         instance = this;
+        this.Initialise();
+    }
+
+    void Initialise()
+    {
         player = FindFirstObjectByType<PlayerController>();
 
         // Initialize the flow bar color and level
